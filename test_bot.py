@@ -19,7 +19,113 @@ import qrcode
 ####################
 import time
 
+####################
+from pytube import YouTube
+
+
+UserMessageID = {}
+
+import os
+
+
+
+
+
+
+
+
+
+############################	MENU
+@bot.message_handler(commands=['menu'])
+def menu(message):
+	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+	button_QRcode 	= types.InlineKeyboardButton("link into QR-code") 
+	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
+	markup.add(button_QRcode, button_YT_video)
+	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
+
+link = 0
+
+@bot.message_handler(content_types=['text'])
+################################################################### QR-code
+def commands(message):
+	if 	message.text  == "link into QR-code":
+		mes = bot.send_message(message.chat.id, """send a link""")
+		bot.register_next_step_handler(mes, send_QRcode)
+################################################################### YouTube downloader
+	elif message.text == "📥 video YouTube":
+		mes = bot.send_message(message.chat.id, """send a link""")
+		bot.register_next_step_handler(mes, video_YouTube_download)
+################################################################## QR-code
+def send_QRcode(message):
+	UserMessageID[message.text] = message.text
+	data = UserMessageID[message.text]
+	print("data:", data)
+	img = qrcode.make(data)
+	img.save('QRCode.png')
+	image = open('QRCode.png', 'rb')
+	bot.send_photo(message.chat.id, image)
+################################################################## YouTube downloader
+def video_YouTube_download(message):
+	link = UserMessageID[message.text] = message.text
+	youtubeObject = YouTube(link)
+	youtubeObject = youtubeObject.streams.get_highest_resolution()
+	try:
+		bot.send_message(message.chat.id, "Please wait, it may take some time...")
+		youtubeObject.download(filename = f"{youtubeObject.title}.mp4")
+		bot.send_video(message.chat.id, video=open(f"{youtubeObject.title}.mp4", 'rb'), supports_streaming=True)
+		os.remove(f"{youtubeObject.title}.mp4")
+	except:
+		print("Some Error!")
+
+
+
+
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@bot.message_handler(commands=['bio'])
+def bio(message):
+	markup =  types.InlineKeyboardMarkup(row_width=1)
+
+	button_github 		= types.InlineKeyboardButton("🌟 My Github 🌟", url="https://github.com/AnMnv/AnMnv")
+	button_mems 		= types.InlineKeyboardButton("Channel with mems 🤡", url="https://t.me/topEverydayMem")
+	button_music 		= types.InlineKeyboardButton("Channel with music 🎧", url="https://t.me/drop_trap")
+	button_projects 	= types.InlineKeyboardButton("Cool open resource projects 🔥", url="https://t.me/MyOpenSourceList")
+
+	markup.add(button_github,button_mems,button_music,button_projects)
+	bot.send_message(message.chat.id, """Hello! I'm WinnieNotThePooh\nHere are some of my projects:""", reply_markup=markup)
+
+
+
+
 
 
 
@@ -31,7 +137,7 @@ import time
 #@bot.message_handler(commands=['send'])
 #def send(message):
 #	bot.send_message(262330332, 'Ку-ку')
-################################################################################
+################################################################################----------------
 last_time = {}
  
 @bot.message_handler(commands=['menu'])
@@ -69,75 +175,13 @@ def send_all(message):
 	rmk.add(InlineKeyboardButton("Да"), InlineKeyboardButton("Нет"))
 	msg1 = bot.send_message(message.chat.id, 'Отправить?', reply_markup=rmk)
 	bot.register_next_step_handler(msg1, send_all_users)
-	send_to_all[message.from_user.id] = message.text
+	send_to_all[message.text] = message.text
 
 def send_all_users(message):
 	if message.text == "Да":
 		for i in usersID.getall():
-			bot.send_message(i, send_to_all[message.from_user.id])
+			bot.send_message(i, send_to_all[message.text])
 ############################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@bot.message_handler(commands=['bio'])
-def bio(message):
-	markup =  types.InlineKeyboardMarkup(row_width=1)
-
-	button_github 		= types.InlineKeyboardButton("🌟 My Github 🌟", url="https://github.com/AnMnv/AnMnv")
-	button_mems 		= types.InlineKeyboardButton("Channel with mems 🤡", url="https://t.me/topEverydayMem")
-	button_music 		= types.InlineKeyboardButton("Channel with music 🎧", url="https://t.me/drop_trap")
-	button_projects 	= types.InlineKeyboardButton("Cool open resource projects 🔥", url="https://t.me/MyOpenSourceList")
-
-	markup.add(button_github,button_mems,button_music,button_projects)
-	bot.send_message(message.chat.id, """Hello! I'm WinnieNotThePooh\nHere are some of my projects:""", reply_markup=markup)
-
-
-
-
-
-############################	QR-code	############################
-@bot.message_handler(commands=['menu'])
-def menu(message):
-	markup =  ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
-	button_QRcode = types.InlineKeyboardButton("link into QR-code")
-	markup.add(button_QRcode)
-	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
-
-
-#data = 'QR Code using make() function'
-
-########################################################
-@bot.message_handler(content_types=['text'])
-def commands(message):
-	if message.text == "link into QR-code":
-		mes = bot.send_message(message.chat.id, """send a link""")
-		bot.register_next_step_handler(mes, send_QRcode)
-def send_QRcode(message):
-		data = f'{message.text}'
-		img = qrcode.make(data)
-		img.save('QRCode.png')
-		image = open('QRCode.png', 'rb')
-		bot.send_photo(message.chat.id, image)
-
-
-
 
 
 
