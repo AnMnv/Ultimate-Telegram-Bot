@@ -10,3 +10,6 @@ myconfig.py
 usersIDonly.db
 
 full_base.db
+
+
+__pycache__/
