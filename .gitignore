@@ -1,4 +1,12 @@
 # Portable Network Graphics
 *.png
 
+*.jpg
+
 *.mp4
+
+myconfig.py
+
+usersIDonly.db
+
+full_base.db

@@ -9,42 +9,56 @@ from telebot.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeybo
 ####################
 import time
 
-bot = telebot.TeleBot('1147204820:AAH54bhdtDSuCmXRi5bq9XGbWcxzAbMYlzo')
-
-send_to_all = {}
+####################
+from myconfig import *
+bot = telebot.TeleBot(bot_key)
 
 ####################
 import qrcode
-
 ####################
 import time
-
 ####################
 from pytube import YouTube
-
-
+####################
 UserMessageID = {}
-
+send_to_all = {}
+####################
 import os
+################### for db
+import pickledb
+db = pickledb.load('full_base.db', False)
+usersID = pickledb.load('usersIDonly.db', False)
+####################
+hi_sticker = 'CAACAgIAAxkBAAEGrUxjjIc5nE63ZuwAARTGfW8SVYQJy-0AAkUDAAK1cdoGk4gQHIncDRsrBA'
+####################
+import subprocess
+####################
 
 
-
-
-
-
-
-
-
-############################	MENU
-@bot.message_handler(commands=['menu'])
-def menu(message):
+###################################################################	snatching user data
+@bot.message_handler(commands=['start', 'menu'])
+def start(message):
+	bot.send_sticker(message.chat.id, hi_sticker)
+	bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name} {message.from_user.last_name}')
 	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
 	button_QRcode 	= types.InlineKeyboardButton("link into QR-code") 
 	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
 	markup.add(button_QRcode, button_YT_video)
 	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
+	#write how many times user started Bot
+	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
+	usersID_counter = db.get(str(f'{message.from_user.id}'))
+	if counter == False:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), '1')
+		usersID.set(str(f'{message.from_user.id}'), '1')
+	else:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), str(int(counter)+1))
+		usersID.set(str(f'{message.from_user.id}'), str(int(usersID_counter)+1))
+	db.dump()
+	usersID.dump()
+###################################################################	snatching user data
 
-link = 0
+
 
 @bot.message_handler(content_types=['text'])
 ################################################################### QR-code
@@ -69,12 +83,20 @@ def send_QRcode(message):
 def video_YouTube_download(message):
 	link = UserMessageID[message.text] = message.text
 	youtubeObject = YouTube(link)
-	youtubeObject = youtubeObject.streams.get_highest_resolution()
+	#youtubeObject = youtubeObject.streams.get_highest_resolution()
+	#youtubeObject = youtubeObject.streams.get_lowest_resolution()
+	youtubeObject = youtubeObject.streams.filter(res="720p").first()
 	try:
+		print(link)
 		bot.send_message(message.chat.id, "Please wait, it may take some time...")
-		youtubeObject.download(filename = f"{youtubeObject.title}.mp4")
-		bot.send_video(message.chat.id, video=open(f"{youtubeObject.title}.mp4", 'rb'), supports_streaming=True)
-		os.remove(f"{youtubeObject.title}.mp4")
+		#youtubeObject.download(filename = f"{youtubeObject.title}.mp4")
+		youtubeObject.download(filename = "qqq.mp4")
+			#youtubeObject = youtubeObject.streams.get_highest_resolution().download(filename = f"{youtubeObject.title}.mp4", res="360p")
+			#youtubeObject.download(filename = f"{youtubeObject.title}.mp4")
+		
+		 
+		#bot.send_video(message.chat.id, video=open(f"{youtubeObject.title}.mp4", 'rb'))
+			#os.remove(f"{youtubeObject.title}.mp4")
 	except:
 		print("Some Error!")
 
@@ -83,7 +105,28 @@ def video_YouTube_download(message):
 
  
 
+############################ message to all users
+@bot.message_handler(commands=['sendallfromadminqqq'])
+def send(message):
+	msg1 = bot.send_message(message.chat.id, 'Введи текст который нужно отправить всем')
+	bot.register_next_step_handler(msg1, send_all)
 
+def send_all(message):
+	rmk = ReplyKeyboardMarkup(row_width=2,one_time_keyboard=True,resize_keyboard=True)
+	rmk.add(InlineKeyboardButton("Да"), InlineKeyboardButton("Нет"))
+	msg1 = bot.send_message(message.chat.id, 'Отправить?', reply_markup=rmk)
+	bot.register_next_step_handler(msg1, send_all_users)
+	send_to_all[message.from_user.id] = message.text
+
+def send_all_users(message):
+	if message.text == "Да":
+		for i in usersID.getall():
+			markup = types.InlineKeyboardMarkup()
+			b1 = types.InlineKeyboardButton("Заказать слона", url="https://github.com/AnMnv/AnMnv")
+			markup.add(b1)
+			keyboard_markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+			bot.send_message(i, send_to_all[message.from_user.id], reply_markup=markup)
+############################
 
 
 
