@@ -7,7 +7,7 @@ from telebot import types
 from telebot.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
 
 ####################
-import time
+#import time
 
 ####################
 from myconfig import *
@@ -16,7 +16,7 @@ bot = telebot.TeleBot(bot_key)
 ####################
 import qrcode
 ####################
-import time
+#import time
 ####################
 from pytube import YouTube
 ####################
@@ -30,9 +30,16 @@ db = pickledb.load('full_base.db', False)
 usersID = pickledb.load('usersIDonly.db', False)
 ####################
 hi_sticker = 'CAACAgIAAxkBAAEGrUxjjIc5nE63ZuwAARTGfW8SVYQJy-0AAkUDAAK1cdoGk4gQHIncDRsrBA'
+pocker_face_sti = 'CAACAgIAAxkBAAEGfgNje4CHF8mJYmlBqI8UM5J-0DXg2gACDQMAAhM5jxFj1aggf1_t0isE'	# id стикерa (@idsticker_bot)	
+face_hand = 'CAACAgIAAxkBAAEGvWtjkgikA_G9AAFhmIXZ7QRpr9WbN-oAArwAA5XQMAXt0_Sw87poQysE'
 ####################
-import subprocess
+#import subprocess
 ####################
+state_df = {}
+####################
+import matplotlib.pyplot as plt
+import numpy as np
+import numexpr
 
 
 ###################################################################	snatching user data
@@ -41,9 +48,11 @@ def start(message):
 	bot.send_sticker(message.chat.id, hi_sticker)
 	bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name} {message.from_user.last_name}')
 	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-	button_QRcode 	= types.InlineKeyboardButton("link into QR-code") 
+	button_QRcode 	= types.InlineKeyboardButton("🔗 link into QR-code") 
 	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
-	markup.add(button_QRcode, button_YT_video)
+	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
+	plot = types.InlineKeyboardButton("📈 plot")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot)
 	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
 	#write how many times user started Bot
 	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
@@ -63,13 +72,39 @@ def start(message):
 @bot.message_handler(content_types=['text'])
 ################################################################### QR-code
 def commands(message):
-	if 	message.text  == "link into QR-code":
+	if 	message.text  == "🔗 link into QR-code":
 		mes = bot.send_message(message.chat.id, """send a link""")
 		bot.register_next_step_handler(mes, send_QRcode)
 ################################################################### YouTube downloader
 	elif message.text == "📥 video YouTube":
 		mes = bot.send_message(message.chat.id, """send a link""")
 		bot.register_next_step_handler(mes, video_YouTube_download)
+	elif message.text == "⬆️ MAKE IT CAPS":
+		mes = bot.send_message(message.chat.id, "send a text")
+		bot.register_next_step_handler(mes, make_it_caps)
+	elif message.text == '📈 plot':
+		mess1 = """
+			Целочисленное деление двух чисел: "//"\n
+			Возведение в степень: "**"\n
+			Получение остатка от деления: "%"\n
+			ceil() и floor() — целая часть числа\n
+			fabs() — абсолютное значение\n
+			factorial() — функция факториала\n
+			fmod() — остаток от деления\n
+			frexp()\n
+			fsum() — точная сумма float\n
+			Функции возведения в степень и логарифма\n
+			exp(); expm1()\n
+			log() — логарифм числа\n
+			log1p(); log10()\n
+			pow() – степень числа\n
+			sqrt() — квадратный корень числа\n
+			Тригонометрические функции\n
+			Функция math.sin(); cos(); tan(); asin(); acos(); atan(); atan2(); hypot()."""
+		bot.send_message(message.chat.id, mess1)
+		mess1 = bot.send_message(message.chat.id, 'Введите функцию, типо x**2 + 5')
+		bot.register_next_step_handler(mess1, plot_func)
+
 ################################################################## QR-code
 def send_QRcode(message):
 	UserMessageID[message.text] = message.text
@@ -80,30 +115,79 @@ def send_QRcode(message):
 	image = open('QRCode.png', 'rb')
 	bot.send_photo(message.chat.id, image)
 ################################################################## YouTube downloader
-def video_YouTube_download(message):
-	link = UserMessageID[message.text] = message.text
-	youtubeObject = YouTube(link)
+#def video_YouTube_download(message):
+#	link = UserMessageID[message.text] = message.text
+#	youtubeObject = YouTube(link)
 	#youtubeObject = youtubeObject.streams.get_highest_resolution()
 	#youtubeObject = youtubeObject.streams.get_lowest_resolution()
-	youtubeObject = youtubeObject.streams.filter(res="720p").first()
-	try:
-		print(link)
-		bot.send_message(message.chat.id, "Please wait, it may take some time...")
+#	youtubeObject = youtubeObject.streams.filter(res="720p").first()
+#	try:
+#		print(link)
+#		bot.send_message(message.chat.id, "Please wait, it may take some time...")
 		#youtubeObject.download(filename = f"{youtubeObject.title}.mp4")
-		youtubeObject.download(filename = "qqq.mp4")
+#		youtubeObject.download(filename = "qqq.mp4")
 			#youtubeObject = youtubeObject.streams.get_highest_resolution().download(filename = f"{youtubeObject.title}.mp4", res="360p")
 			#youtubeObject.download(filename = f"{youtubeObject.title}.mp4")
 		
 		 
 		#bot.send_video(message.chat.id, video=open(f"{youtubeObject.title}.mp4", 'rb'))
 			#os.remove(f"{youtubeObject.title}.mp4")
-	except:
-		print("Some Error!")
+#	except:
+#		print("Some Error!")
+################################################################## text --> TEXT	
+def make_it_caps(message):
+	UserMessageID[message.text] = message.text
+	try:
+		bot.send_message(message.chat.id, message.text.upper())
+	except Exception as e:
+		bot.send_sticker(message.chat.id, pocker_face_sti)
+		bot.send_message(message.chat.id, "Something gone wrong")
+################################################################## plotting a function
+def plot_func(message):
+	try:
+		x = np.linspace(-5,5,100)
+		y = numexpr.evaluate(message.text)
+		plt.plot(x, y, 'r')
+		plt.savefig('qqq.png', dpi = 300)
+		bot.send_photo(message.chat.id, photo=open('qqq.png', 'rb'))
+		os.remove('qqq.png')
+	except Exception as e:
+		bot.send_sticker(message.chat.id, pocker_face_sti)
+		bot.send_message(message.chat.id, "Something gone wrong")
 
 
 
 
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ############################ message to all users
 @bot.message_handler(commands=['sendallfromadminqqq'])
@@ -129,31 +213,6 @@ def send_all_users(message):
 ############################
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @bot.message_handler(commands=['bio'])
 def bio(message):
 	markup =  types.InlineKeyboardMarkup(row_width=1)
@@ -165,16 +224,6 @@ def bio(message):
 
 	markup.add(button_github,button_mems,button_music,button_projects)
 	bot.send_message(message.chat.id, """Hello! I'm WinnieNotThePooh\nHere are some of my projects:""", reply_markup=markup)
-
-
-
-
-
-
-
-
-
-
 
 
 #@bot.message_handler(commands=['send'])
@@ -193,18 +242,6 @@ def message_handler(message):
         last_time[message.chat.id] = time.time()
  
 ################################################################################https://www.cyberforum.ru/python-api/thread2722383.html
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ############################
@@ -242,45 +279,45 @@ def website(message):
 ########################################################
 
 #######################     plotting a function      ##############################
-@bot.message_handler(content_types=['text'])
-def plot(message):
-	if message.text == 'график 📈':
-		mess1 = """
-			Целочисленное деление двух чисел: "//"\n
-			Возведение в степень: "**"\n
-			Получение остатка от деления: "%"\n
-			ceil() и floor() — целая часть числа\n
-			fabs() — абсолютное значение\n
-			factorial() — функция факториала\n
-			fmod() — остаток от деления\n
-			frexp()\n
-			fsum() — точная сумма float\n
-			Функции возведения в степень и логарифма\n
-			exp(); expm1()\n
-			log() — логарифм числа\n
-			log1p(); log10()\n
-			pow() – степень числа\n
-			sqrt() — квадратный корень числа\n
-			Тригонометрические функции\n
-			Функция math.sin(); cos(); tan(); asin(); acos(); atan(); atan2(); hypot().
-				"""
-		bot.send_message(message.chat.id, mess1)
-		mess1 = bot.send_message(message.chat.id, 'Введите функцию, типо x**2 + 5')#, reply_markup=rmk)
-		bot.register_next_step_handler(mess1, plot_func)
+#@bot.message_handler(content_types=['text'])
+#def plot(message):
+#	if message.text == 'график 📈':
+#		mess1 = """
+#			Целочисленное деление двух чисел: "//"\n
+#			Возведение в степень: "**"\n
+#			Получение остатка от деления: "%"\n
+#			ceil() и floor() — целая часть числа\n
+#			fabs() — абсолютное значение\n
+#			factorial() — функция факториала\n
+#			fmod() — остаток от деления\n
+#			frexp()\n
+#			fsum() — точная сумма float\n
+#			Функции возведения в степень и логарифма\n
+#			exp(); expm1()\n
+#			log() — логарифм числа\n
+#			log1p(); log10()\n
+#			pow() – степень числа\n
+#			sqrt() — квадратный корень числа\n
+#			Тригонометрические функции\n
+#			Функция math.sin(); cos(); tan(); asin(); acos(); atan(); atan2(); hypot().
+#				"""
+#		bot.send_message(message.chat.id, mess1)
+#		mess1 = bot.send_message(message.chat.id, 'Введите функцию, типо x**2 + 5')#, reply_markup=rmk)
+#		bot.register_next_step_handler(mess1, plot_func)
 
 
 
 
 ###############################   plotting    #######################################
-def plot_func(message):
-	try:
-		x = np.linspace(-5,5,100)
-		y = numexpr.evaluate(message.text)
-		plt.plot(x, y, 'r')
-		plt.savefig('plot_name.png', dpi = 300)
-		bot.send_photo(message.chat.id, photo=open('plot_name.png', 'rb'))
-	except Exception as e:
-		bot.send_message(message.chat.id, f'Сам {message.text}')
+#def plot_func(message):
+#	try:
+#		x = np.linspace(-5,5,100)
+#		y = numexpr.evaluate(message.text)
+#		plt.plot(x, y, 'r')
+#		plt.savefig('plot_name.png', dpi = 300)
+#		bot.send_photo(message.chat.id, photo=open('plot_name.png', 'rb'))
+#	except Exception as e:
+#		bot.send_message(message.chat.id, f'Сам {message.text}')
 
 
 
