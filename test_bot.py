@@ -40,6 +40,8 @@ state_df = {}
 import matplotlib.pyplot as plt
 import numpy as np
 import numexpr
+#################### for mp4 -> mp3
+from moviepy.editor import VideoFileClip
 
 
 ###################################################################	snatching user data
@@ -52,7 +54,8 @@ def start(message):
 	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
 	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
 	plot = types.InlineKeyboardButton("📈 plot")
-	markup.add(button_QRcode, button_YT_video, make_it_caps, plot)
+	mp4mp3 = types.InlineKeyboardButton("mp4 --> mp3")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3)
 	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
 	#write how many times user started Bot
 	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
@@ -104,6 +107,10 @@ def commands(message):
 		bot.send_message(message.chat.id, mess1)
 		mess1 = bot.send_message(message.chat.id, 'Введите функцию, типо x**2 + 5')
 		bot.register_next_step_handler(mess1, plot_func)
+	elif message.text == "mp4 --> mp3":
+		mes = bot.send_message(message.chat.id, "send a video")
+		bot.register_next_step_handler(mes, mp4mp3)
+
 
 ################################################################## QR-code
 def send_QRcode(message):
@@ -154,6 +161,30 @@ def plot_func(message):
 	except Exception as e:
 		bot.send_sticker(message.chat.id, pocker_face_sti)
 		bot.send_message(message.chat.id, "Something gone wrong")
+
+
+################################################################## mp4 --> mp3
+@bot.message_handler(content_types=['video'])
+def mp4mp3(message):
+	try:
+		video = bot.get_file(message.video.file_id)
+		video_name = message.video.file_name
+		video_path = video.file_path
+		video_as_file = bot.download_file(video_path)
+		with open(video_name, "wb") as videofile:
+			videofile.write(video_as_file)
+
+		clip = VideoFileClip(video_name)
+		clip.audio.write_audiofile(f'{video_name}.mp3')
+		clip.close()
+
+		with open(f'{video_name}.mp3', 'rb') as audio:
+			bot.send_audio(message.from_user.id, audio)
+		audio.close()
+
+	except Exception as e:
+		bot.send_sticker(message.chat.id, face_hand)
+		bot.send_message(message.chat.id, "Size of video is too big")
 
 
 
