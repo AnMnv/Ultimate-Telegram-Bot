@@ -32,6 +32,7 @@ usersID = pickledb.load('usersIDonly.db', False)
 hi_sticker = 'CAACAgIAAxkBAAEGrUxjjIc5nE63ZuwAARTGfW8SVYQJy-0AAkUDAAK1cdoGk4gQHIncDRsrBA'
 pocker_face_sti = 'CAACAgIAAxkBAAEGfgNje4CHF8mJYmlBqI8UM5J-0DXg2gACDQMAAhM5jxFj1aggf1_t0isE'	# id стикерa (@idsticker_bot)	
 face_hand = 'CAACAgIAAxkBAAEGvWtjkgikA_G9AAFhmIXZ7QRpr9WbN-oAArwAA5XQMAXt0_Sw87poQysE'
+papei_boli = 'CAACAgIAAxkBAAEGxgNjlOk24KiISNVHEW8TOlQcICk-jQACthAAAujW4hKViMKVR2dEICsE'
 ####################
 #import subprocess
 ####################
@@ -42,6 +43,29 @@ import numpy as np
 import numexpr
 #################### for mp4 -> mp3
 from moviepy.editor import VideoFileClip
+#################### for checking webpage
+import urllib.request #pip install urllib3
+
+
+
+################################################################## light check
+@bot.message_handler(commands=['dtek'])
+def dtek(message):
+	qqq = urllib.request.urlopen("https://git.3ig.kiev.ua").getcode()
+	if qqq == 200:
+		bot.send_message(message.chat.id, "Свет есть")
+	else:
+		bot.send_message(message.chat.id, "Света нету")
+		bot.send_sticker(message.chat.id, papei_boli)
+
+
+
+
+
+
+
+
+
 
 
 ###################################################################	snatching user data
