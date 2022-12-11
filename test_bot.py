@@ -44,7 +44,8 @@ import numexpr
 #################### for mp4 -> mp3
 from moviepy.editor import VideoFileClip
 #################### for checking webpage
-import urllib.request #pip install urllib3
+import requests
+
 
 
 
@@ -52,23 +53,13 @@ import urllib.request #pip install urllib3
 @bot.message_handler(commands=['dtek'])
 def dtek(message):
 	try:
-		qqq = urllib.request.urlopen("https://git.3ig.kiev.ua").getcode()
-		print(qqq)
-		if qqq == 200:
-			bot.send_message(message.chat.id, "Свет есть")
+		requests.get("https://git.3ig.kiev.ua", verify=False, timeout=5)
+		bot.send_message(message.chat.id, "Свет есть")
 	except Exception as e:
 		bot.send_message(message.chat.id, "Света нету")
 		bot.send_sticker(message.chat.id, papei_boli)
 
 
-
-	#qqq = urllib.request.urlopen("https://git.3ig.kiev.ua").getcode()
-	#print(qqq)
-	#if qqq == 200:
-	#	bot.send_message(message.chat.id, "Свет есть")
-	#else:
-		#bot.send_message(message.chat.id, "Света нету")
-		#bot.send_sticker(message.chat.id, papei_boli)
 
 
 
@@ -431,7 +422,7 @@ def callback_query(call):
 
 bot.polling(none_stop=True)
 
-
+#pipreqs path/to/project
 
 
 
