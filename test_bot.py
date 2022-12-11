@@ -51,12 +51,26 @@ import urllib.request #pip install urllib3
 ################################################################## light check
 @bot.message_handler(commands=['dtek'])
 def dtek(message):
-	qqq = urllib.request.urlopen("https://git.3ig.kiev.ua").getcode()
-	if qqq == 200:
-		bot.send_message(message.chat.id, "Свет есть")
-	else:
+	try:
+		qqq = urllib.request.urlopen("https://git.3ig.kiev.ua").getcode()
+		print(qqq)
+		if qqq == 200:
+			bot.send_message(message.chat.id, "Свет есть")
+	except Exception as e:
 		bot.send_message(message.chat.id, "Света нету")
 		bot.send_sticker(message.chat.id, papei_boli)
+
+
+
+	#qqq = urllib.request.urlopen("https://git.3ig.kiev.ua").getcode()
+	#print(qqq)
+	#if qqq == 200:
+	#	bot.send_message(message.chat.id, "Свет есть")
+	#else:
+		#bot.send_message(message.chat.id, "Света нету")
+		#bot.send_sticker(message.chat.id, papei_boli)
+
+
 
 
 
