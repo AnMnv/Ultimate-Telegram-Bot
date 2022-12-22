@@ -55,18 +55,15 @@ import csv
 
 @bot.message_handler(commands=['dtek1'])
 def dtek1(message):
-	print("111")
 	url = "https://git.3ig.kiev.ua"
 	svet_status = 1
 
 	try:
 		requests.head(f"{url}", verify=False, timeout=5)
-		print("qqq")
 		svet_status = 1
 
 	except Exception as e:
 		svet_status = 0
-		print(e)
 		bot.send_message(message.chat.id, "Света нету")
 		bot.send_sticker(message.chat.id, papei_boli)
 
@@ -74,8 +71,7 @@ def dtek1(message):
 		writer = csv.writer(f)
 		writer.writerow(["time", svet_status])
 
-	time.sleep(30 * 60)	
-	
+	time.sleep(30 * 60)
 	schedule.every(5).seconds.do(dtek1(message))
 	while True:
 		schedule.run_pending()
@@ -455,11 +451,7 @@ def website(message):
 #		bot.delete_message(message.chat.id, message.message_id + 1)
 
  
-@bot.callback_query_handler(func=lambda call: True)
-def callback_query(call):
-    if call.data == "Delete":
-       bot.answer_callback_query(call.id, "Эт хорошо.")
-       bot.send_message(call.message.chat.id, "Эт хорошо.")
+
 
 
 
@@ -475,7 +467,9 @@ def callback_query(call):
 
 bot.polling(none_stop=True)
 
-#pipreqs path/to/project
+######################### for making only project requirements
+#pip install pipreqs
+#pipreqs test_bot.py
 
 
 
