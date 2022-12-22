@@ -24,6 +24,7 @@ UserMessageID = {}
 send_to_all = {}
 ####################
 import os
+#os.environ["IMAGEIO_FFMPEG_EXE"] = "/usr/bin/ffmpeg" # for delpoy on a phone 
 ################### for db
 import pickledb
 db = pickledb.load('full_base.db', False)
@@ -46,26 +47,61 @@ from moviepy.editor import VideoFileClip
 #################### for checking webpage
 import requests
 
+#################### for dtek
+import schedule
+import time
 
 
 
-################################################################## light check
-@bot.message_handler(commands=['dtek'])
-def dtek(message):
+
+
+@bot.message_handler(commands=['dtek1'])
+def dtek1(message):
+	print("111")
+	url = "https://git.3ig.kiev.ua"
 	try:
-		requests.get("https://git.3ig.kiev.ua", verify=False, timeout=5)
-		bot.send_message(message.chat.id, "Свет есть")
+		requests.head(f"{url}", verify=False, timeout=5)
+		print("qqq")
+		time.sleep(10)
+		#bot.send_message(message.chat.id, "Свет есть")
 	except Exception as e:
 		bot.send_message(message.chat.id, "Света нету")
 		bot.send_sticker(message.chat.id, papei_boli)
 
 
+	schedule.every(5).seconds.do(dtek1(message))
+	while True:
+		schedule.run_pending()
+		time.sleep(1)
 
 
 
 
 
 
+
+
+
+
+################################################################## light check
+@bot.message_handler(commands=['dtek'])
+def what_link(message):
+	markup =  ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
+	buttons = types.InlineKeyboardButton("https://git.3ig.kiev.ua") 
+	markup.add(buttons)
+
+
+	mes = bot.send_message(message.chat.id, "send  Your url", reply_markup=markup)
+	bot.register_next_step_handler(mes, dtek)
+
+def dtek(message):
+	url = message.text
+	try:
+		requests.head(f"{url}", verify=False, timeout=5)
+		bot.send_message(message.chat.id, "Свет есть")
+	except Exception as e:
+		bot.send_message(message.chat.id, "Света нету")
+		bot.send_sticker(message.chat.id, papei_boli)
 
 
 
@@ -84,7 +120,8 @@ def start(message):
 	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
 	plot = types.InlineKeyboardButton("📈 plot")
 	mp4mp3 = types.InlineKeyboardButton("mp4 --> mp3")
-	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3)
+	word_counter = types.InlineKeyboardButton("Word Counter")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3, word_counter)
 	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
 	#write how many times user started Bot
 	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
@@ -139,6 +176,9 @@ def commands(message):
 	elif message.text == "mp4 --> mp3":
 		mes = bot.send_message(message.chat.id, "send a video")
 		bot.register_next_step_handler(mes, mp4mp3)
+	elif message.text == "Word Counter":
+		mes = bot.send_message(message.chat.id, "send message")
+		bot.register_next_step_handler(mes, word_counter)
 
 
 ################################################################## QR-code
@@ -215,8 +255,14 @@ def mp4mp3(message):
 		bot.send_sticker(message.chat.id, face_hand)
 		bot.send_message(message.chat.id, "Size of video is too big")
 
-
-
+################################################################## word counter
+def word_counter(message):
+	try:
+		words = len(message.text.split())
+		bot.send_message(message.chat.id, words)
+	except Exception as e:
+		bot.send_sticker(message.chat.id, pocker_face_sti)
+		bot.send_message(message.chat.id, "Something gone wrong")
 
 
 
