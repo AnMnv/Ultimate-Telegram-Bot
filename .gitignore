@@ -5,6 +5,8 @@
 
 *.mp4
 
+*.csv
+
 myconfig.py
 
 usersIDonly.db

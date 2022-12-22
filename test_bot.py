@@ -50,25 +50,32 @@ import requests
 #################### for dtek
 import schedule
 import time
-
-
-
+import csv
 
 
 @bot.message_handler(commands=['dtek1'])
 def dtek1(message):
 	print("111")
 	url = "https://git.3ig.kiev.ua"
+	svet_status = 1
+
 	try:
 		requests.head(f"{url}", verify=False, timeout=5)
 		print("qqq")
-		time.sleep(10)
-		#bot.send_message(message.chat.id, "Свет есть")
+		svet_status = 1
+
 	except Exception as e:
+		svet_status = 0
+		print(e)
 		bot.send_message(message.chat.id, "Света нету")
 		bot.send_sticker(message.chat.id, papei_boli)
 
+	with open('csv_file.csv', 'a') as f:
+		writer = csv.writer(f)
+		writer.writerow(["time", svet_status])
 
+	time.sleep(30 * 60)	
+	
 	schedule.every(5).seconds.do(dtek1(message))
 	while True:
 		schedule.run_pending()
