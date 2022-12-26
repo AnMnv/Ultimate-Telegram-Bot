@@ -474,6 +474,315 @@ bot.polling(none_stop=True)
 
 
 
+qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+
+###################################################################	snatching user data
+@bot.message_handler(commands=['start', 'menu'])
+def start(message):
+	bot.send_sticker(message.chat.id, hi_sticker)
+	bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name} {message.from_user.last_name}')
+	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+	button_QRcode 	= types.InlineKeyboardButton("🔗 link into QR-code") 
+	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
+	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
+	plot = types.InlineKeyboardButton("📈 plot")
+	mp4mp3 = types.InlineKeyboardButton("mp4 --> mp3")
+	word_counter = types.InlineKeyboardButton("Word Counter")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3, word_counter)
+	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
+	#write how many times user started Bot
+	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
+	usersID_counter = db.get(str(f'{message.from_user.id}'))
+	if counter == False:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), '1')
+		usersID.set(str(f'{message.from_user.id}'), '1')
+	else:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), str(int(counter)+1))
+		usersID.set(str(f'{message.from_user.id}'), str(int(usersID_counter)+1))
+	db.dump()
+	usersID.dump()
+###################################################################	snatching user data
+
+
+###################################################################	snatching user data
+@bot.message_handler(commands=['start', 'menu'])
+def start(message):
+	bot.send_sticker(message.chat.id, hi_sticker)
+	bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name} {message.from_user.last_name}')
+	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+	button_QRcode 	= types.InlineKeyboardButton("🔗 link into QR-code") 
+	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
+	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
+	plot = types.InlineKeyboardButton("📈 plot")
+	mp4mp3 = types.InlineKeyboardButton("mp4 --> mp3")
+	word_counter = types.InlineKeyboardButton("Word Counter")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3, word_counter)
+	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
+	#write how many times user started Bot
+	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
+	usersID_counter = db.get(str(f'{message.from_user.id}'))
+	if counter == False:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), '1')
+		usersID.set(str(f'{message.from_user.id}'), '1')
+	else:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), str(int(counter)+1))
+		usersID.set(str(f'{message.from_user.id}'), str(int(usersID_counter)+1))
+	db.dump()
+	usersID.dump()
+###################################################################	snatching user data
+
+
+###################################################################	snatching user data
+@bot.message_handler(commands=['start', 'menu'])
+def start(message):
+	bot.send_sticker(message.chat.id, hi_sticker)
+	bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name} {message.from_user.last_name}')
+	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+	button_QRcode 	= types.InlineKeyboardButton("🔗 link into QR-code") 
+	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
+	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
+	plot = types.InlineKeyboardButton("📈 plot")
+	mp4mp3 = types.InlineKeyboardButton("mp4 --> mp3")
+	word_counter = types.InlineKeyboardButton("Word Counter")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3, word_counter)
+	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
+	#write how many times user started Bot
+	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
+	usersID_counter = db.get(str(f'{message.from_user.id}'))
+	if counter == False:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), '1')
+		usersID.set(str(f'{message.from_user.id}'), '1')
+	else:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), str(int(counter)+1))
+		usersID.set(str(f'{message.from_user.id}'), str(int(usersID_counter)+1))
+	db.dump()
+	usersID.dump()
+###################################################################	snatching user data
+
+
+###################################################################	snatching user data
+@bot.message_handler(commands=['start', 'menu'])
+def start(message):
+	bot.send_sticker(message.chat.id, hi_sticker)
+	bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name} {message.from_user.last_name}')
+	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+	button_QRcode 	= types.InlineKeyboardButton("🔗 link into QR-code") 
+	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
+	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
+	plot = types.InlineKeyboardButton("📈 plot")
+	mp4mp3 = types.InlineKeyboardButton("mp4 --> mp3")
+	word_counter = types.InlineKeyboardButton("Word Counter")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3, word_counter)
+	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
+	#write how many times user started Bot
+	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
+	usersID_counter = db.get(str(f'{message.from_user.id}'))
+	if counter == False:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), '1')
+		usersID.set(str(f'{message.from_user.id}'), '1')
+	else:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), str(int(counter)+1))
+		usersID.set(str(f'{message.from_user.id}'), str(int(usersID_counter)+1))
+	db.dump()
+	usersID.dump()
+###################################################################	snatching user data
+
+
+###################################################################	snatching user data
+@bot.message_handler(commands=['start', 'menu'])
+def start(message):
+	bot.send_sticker(message.chat.id, hi_sticker)
+	bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name} {message.from_user.last_name}')
+	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+	button_QRcode 	= types.InlineKeyboardButton("🔗 link into QR-code") 
+	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
+	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
+	plot = types.InlineKeyboardButton("📈 plot")
+	mp4mp3 = types.InlineKeyboardButton("mp4 --> mp3")
+	word_counter = types.InlineKeyboardButton("Word Counter")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3, word_counter)
+	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
+	#write how many times user started Bot
+	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
+	usersID_counter = db.get(str(f'{message.from_user.id}'))
+	if counter == False:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), '1')
+		usersID.set(str(f'{message.from_user.id}'), '1')
+	else:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), str(int(counter)+1))
+		usersID.set(str(f'{message.from_user.id}'), str(int(usersID_counter)+1))
+	db.dump()
+	usersID.dump()
+###################################################################	snatching user data
+
+
+###################################################################	snatching user data
+@bot.message_handler(commands=['start', 'menu'])
+def start(message):
+	bot.send_sticker(message.chat.id, hi_sticker)
+	bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name} {message.from_user.last_name}')
+	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+	button_QRcode 	= types.InlineKeyboardButton("🔗 link into QR-code") 
+	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
+	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
+	plot = types.InlineKeyboardButton("📈 plot")
+	mp4mp3 = types.InlineKeyboardButton("mp4 --> mp3")
+	word_counter = types.InlineKeyboardButton("Word Counter")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3, word_counter)
+	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
+	#write how many times user started Bot
+	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
+	usersID_counter = db.get(str(f'{message.from_user.id}'))
+	if counter == False:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), '1')
+		usersID.set(str(f'{message.from_user.id}'), '1')
+	else:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), str(int(counter)+1))
+		usersID.set(str(f'{message.from_user.id}'), str(int(usersID_counter)+1))
+	db.dump()
+	usersID.dump()
+###################################################################	snatching user data
+
+
+###################################################################	snatching user data
+@bot.message_handler(commands=['start', 'menu'])
+def start(message):
+	bot.send_sticker(message.chat.id, hi_sticker)
+	bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name} {message.from_user.last_name}')
+	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+	button_QRcode 	= types.InlineKeyboardButton("🔗 link into QR-code") 
+	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
+	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
+	plot = types.InlineKeyboardButton("📈 plot")
+	mp4mp3 = types.InlineKeyboardButton("mp4 --> mp3")
+	word_counter = types.InlineKeyboardButton("Word Counter")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3, word_counter)
+	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
+	#write how many times user started Bot
+	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
+	usersID_counter = db.get(str(f'{message.from_user.id}'))
+	if counter == False:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), '1')
+		usersID.set(str(f'{message.from_user.id}'), '1')
+	else:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), str(int(counter)+1))
+		usersID.set(str(f'{message.from_user.id}'), str(int(usersID_counter)+1))
+	db.dump()
+	usersID.dump()
+###################################################################	snatching user data
+
+
+###################################################################	snatching user data
+@bot.message_handler(commands=['start', 'menu'])
+def start(message):
+	bot.send_sticker(message.chat.id, hi_sticker)
+	bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name} {message.from_user.last_name}')
+	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+	button_QRcode 	= types.InlineKeyboardButton("🔗 link into QR-code") 
+	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
+	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
+	plot = types.InlineKeyboardButton("📈 plot")
+	mp4mp3 = types.InlineKeyboardButton("mp4 --> mp3")
+	word_counter = types.InlineKeyboardButton("Word Counter")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3, word_counter)
+	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
+	#write how many times user started Bot
+	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
+	usersID_counter = db.get(str(f'{message.from_user.id}'))
+	if counter == False:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), '1')
+		usersID.set(str(f'{message.from_user.id}'), '1')
+	else:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), str(int(counter)+1))
+		usersID.set(str(f'{message.from_user.id}'), str(int(usersID_counter)+1))
+	db.dump()
+	usersID.dump()
+###################################################################	snatching user data
+
+
+###################################################################	snatching user data
+@bot.message_handler(commands=['start', 'menu'])
+def start(message):
+	bot.send_sticker(message.chat.id, hi_sticker)
+	bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name} {message.from_user.last_name}')
+	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+	button_QRcode 	= types.InlineKeyboardButton("🔗 link into QR-code") 
+	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
+	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
+	plot = types.InlineKeyboardButton("📈 plot")
+	mp4mp3 = types.InlineKeyboardButton("mp4 --> mp3")
+	word_counter = types.InlineKeyboardButton("Word Counter")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3, word_counter)
+	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
+	#write how many times user started Bot
+	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
+	usersID_counter = db.get(str(f'{message.from_user.id}'))
+	if counter == False:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), '1')
+		usersID.set(str(f'{message.from_user.id}'), '1')
+	else:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), str(int(counter)+1))
+		usersID.set(str(f'{message.from_user.id}'), str(int(usersID_counter)+1))
+	db.dump()
+	usersID.dump()
+###################################################################	snatching user data
+
+
+###################################################################	snatching user data
+@bot.message_handler(commands=['start', 'menu'])
+def start(message):
+	bot.send_sticker(message.chat.id, hi_sticker)
+	bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name} {message.from_user.last_name}')
+	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+	button_QRcode 	= types.InlineKeyboardButton("🔗 link into QR-code") 
+	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
+	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
+	plot = types.InlineKeyboardButton("📈 plot")
+	mp4mp3 = types.InlineKeyboardButton("mp4 --> mp3")
+	word_counter = types.InlineKeyboardButton("Word Counter")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3, word_counter)
+	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
+	#write how many times user started Bot
+	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
+	usersID_counter = db.get(str(f'{message.from_user.id}'))
+	if counter == False:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), '1')
+		usersID.set(str(f'{message.from_user.id}'), '1')
+	else:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), str(int(counter)+1))
+		usersID.set(str(f'{message.from_user.id}'), str(int(usersID_counter)+1))
+	db.dump()
+	usersID.dump()
+###################################################################	snatching user data
+
+
+###################################################################	snatching user data
+@bot.message_handler(commands=['start', 'menu'])
+def start(message):
+	bot.send_sticker(message.chat.id, hi_sticker)
+	bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name} {message.from_user.last_name}')
+	markup =  ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+	button_QRcode 	= types.InlineKeyboardButton("🔗 link into QR-code") 
+	button_YT_video = types.InlineKeyboardButton("📥 video YouTube")
+	make_it_caps = types.InlineKeyboardButton("⬆️ MAKE IT CAPS")
+	plot = types.InlineKeyboardButton("📈 plot")
+	mp4mp3 = types.InlineKeyboardButton("mp4 --> mp3")
+	word_counter = types.InlineKeyboardButton("Word Counter")
+	markup.add(button_QRcode, button_YT_video, make_it_caps, plot, mp4mp3, word_counter)
+	bot.send_message(message.chat.id, """Choose what You want to do:""", reply_markup=markup)
+	#write how many times user started Bot
+	counter = db.get(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'))
+	usersID_counter = db.get(str(f'{message.from_user.id}'))
+	if counter == False:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), '1')
+		usersID.set(str(f'{message.from_user.id}'), '1')
+	else:
+		db.set(str(f'{message.from_user.id} @{message.from_user.username} | {message.from_user.first_name} {message.from_user.last_name}'), str(int(counter)+1))
+		usersID.set(str(f'{message.from_user.id}'), str(int(usersID_counter)+1))
+	db.dump()
+	usersID.dump()
+###################################################################	snatching user data
+
 
 
 ###################################################################	snatching user data
