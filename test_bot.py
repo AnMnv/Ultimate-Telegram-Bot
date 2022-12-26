@@ -471,6 +471,7 @@ bot.polling(none_stop=True)
 #pip install pipreqs
 #pipreqs test_bot.py
 
+<<<<<<< HEAD
 
 
 
@@ -1247,3 +1248,5 @@ if __name__ == "__main__":
 
 
  
+=======
+>>>>>>> 323327c99a17e986c275f6abbe65c5b46c52f84a
