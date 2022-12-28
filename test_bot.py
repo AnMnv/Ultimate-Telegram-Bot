@@ -457,7 +457,7 @@ bot.polling(none_stop=True)
 
 ######################### for making only project requirements
 #pip install pipreqs
-#pipreqs test_bot.py
+#pipreqs --force
 
 
 
