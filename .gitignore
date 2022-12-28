@@ -7,6 +7,10 @@
 
 *.csv
 
+*.sh
+
+*.gitignore
+
 myconfig.py
 
 usersIDonly.db
